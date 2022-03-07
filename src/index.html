@@ -44,28 +44,22 @@
             domtoimage
                 .toSvg(document.getElementById('banner'))
                 .then(function (dataUrl) {
-                    share('./src/assets/img/image.jpg')
+                    share(dataUrl)
                 })
                 .catch(function (error) {
                     console.error("oops, something went wrong!", error);
                 });
 
 
-            function share(image){
+            async function share(image) {
 
-                const shareData = { files: [image] };
-
-                if (navigator.canShare && navigator.canShare(shareData.files)) {
-                    navigator.share({
-                        files: image,
-                        title: 'Vacation Pictures',
-                        text: 'Photos from September 27 to October 14.',
-                    })
-                        .then(() => alert('Share was successful.'))
-                        .catch((error) => console.log('Sharing failed', error));
-                } else {
-                    alert(`Your system doesn't support sharing files.`);
-                }
+                const blob = await (await fetch(image)).blob();
+                const file = new File([blob], 'fileName.png', {type: blob.type});
+                await navigator.share({
+                    title: 'Hello',
+                    text: 'Check out this image!',
+                    files: [file],
+                })
 
             }
 
