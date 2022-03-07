@@ -53,6 +53,8 @@
 
             function share(value){
 
+                let navigator = '';
+
                 const shareData = { files: [value] };
 
                 if (navigator.canShare && navigator.canShare(shareData)) {
