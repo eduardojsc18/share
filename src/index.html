@@ -17,11 +17,16 @@
 
     <div class="w-full md:w-[500px] rounded-2xl bg-gray-100/10 hover:bg-gray-50/3s0 backdrop-blur-md shadow-sm hover:shadow-2xl overflow-hidden hover:scale-[1.01] transition-all duration-500">
 
-        <div class="h-[300px] bg-white/50 overflow-hidden shadow-inner" id="banner">
+        <div class="h-[300px] bg-white/50 overflow-hidden shadow-inner relative grid place-items-center" id="banner">
             <img src="https://picsum.photos/500/300?"
                  class="hover:scale-110 w-full h-full object-center object-cover transition-all"
                  alt="Easy to use, stylish placeholders"
             >
+
+            <div class="absolute bg-white/70 px-5 py-2 rounded-xl font-semibold shadow-sm border border-gray-600">
+                Lorem ipsum dolor sit amet
+            </div>
+
         </div>
 
         <button class="p-5 flex items-center justify-center gap-3 w-full text-gray-100 transition-all text-xl font-bold relative overflow-hidden group"
@@ -49,10 +54,6 @@
                 .then(function (dataUrl) {
                     share(dataUrl)
                 })
-                .catch(function (error) {
-                    console.error("oops, something went wrong!", error);
-                });
-
 
             async function share(image) {
 
