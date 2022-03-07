@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.0.23"
+  },
+  "dependencies": {
+    "dom-to-image-more": "^2.9.5",
+    "save-html-as-image": "^1.7.1"
+  }
+}

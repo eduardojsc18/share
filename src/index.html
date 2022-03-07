@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <title>Share - System to share images using Web Share API</title>
+
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-700 h-screen grid place-items-center p-3">
+
+    <div class="w-full md:w-[500px] rounded-2xl bg-gray-100/10 hover:bg-gray-50/3s0 backdrop-blur-md shadow-sm hover:shadow-2xl overflow-hidden hover:scale-[1.01] transition-all duration-500">
+
+        <div class="h-[300px] bg-white/50 overflow-hidden shadow-inner" id="banner">
+            <img src="https://picsum.photos/seed/teste/500/300?"
+                 class="hover:scale-110 w-full h-full object-center object-cover transition-all"
+                 alt="Easy to use, stylish placeholders"
+            >
+        </div>
+
+        <button class="p-5 flex items-center justify-center gap-3 w-full text-gray-100 transition-all text-xl font-bold relative overflow-hidden group"
+                onclick="shareImage()"
+            >
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+            </svg>
+            Share
+
+        </button>
+
+    </div>
+
+
+    <script src="../node_modules/dom-to-image-more/src/dom-to-image-more.js"></script>
+
+    <script>
+
+        async function shareImage() {
+
+            await domtoimage
+                .toSvg(document.getElementById('banner'))
+                .then(function (dataUrl) {
+                    share(dataUrl)
+                })
+                .catch(function (error) {
+                    console.error("oops, something went wrong!", error);
+                });
+
+
+            function share(value){
+                if (navigator.canShare && navigator.canShare({files: value})) {
+                    navigator.share({
+                        files: value,
+                        title: 'Vacation Pictures',
+                        text: 'Photos from September 27 to October 14.',
+                    })
+                        .then(() => console.log('Share was successful.'))
+                        .catch((error) => console.log('Sharing failed', error));
+                } else {
+                    console.log(`Your system doesn't support sharing files.`);
+                }
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
