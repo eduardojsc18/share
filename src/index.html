@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#111827">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111827">
+
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
     <title>Share - System to share images using Web Share API</title>
 
@@ -39,10 +42,10 @@
 
     <script>
 
-        function shareImage() {
+        async function shareImage() {
 
-            domtoimage
-                .toSvg(document.getElementById('banner'))
+            await domtoimage
+                .toJpeg(document.getElementById('banner'))
                 .then(function (dataUrl) {
                     share(dataUrl)
                 })
@@ -54,7 +57,8 @@
             async function share(image) {
 
                 const blob = await (await fetch(image)).blob();
-                const file = new File([blob], 'fileName.png', {type: blob.type});
+                const file = new File([blob], 'NomeDoArquivo.jpeg', {type: blob.type});
+
                 await navigator.share({
                     title: 'Hello',
                     text: 'Check out this image!',
