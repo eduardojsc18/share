@@ -39,9 +39,9 @@
 
     <script>
 
-        async function shareImage() {
+        function shareImage() {
 
-            await domtoimage
+            domtoimage
                 .toSvg(document.getElementById('banner'))
                 .then(function (dataUrl) {
                     share(dataUrl)
@@ -52,17 +52,21 @@
 
 
             function share(value){
-                if (navigator.canShare && navigator.canShare({files: value})) {
+
+                const shareData = { files: [value] };
+
+                if (navigator.canShare && navigator.canShare(shareData)) {
                     navigator.share({
-                        files: value,
-                        title: 'Vacation Pictures',
-                        text: 'Photos from September 27 to October 14.',
-                    })
-                        .then(() => console.log('Share was successful.'))
-                        .catch((error) => console.log('Sharing failed', error));
+                        files: [value]
+                    }).then(() => {
+                        console.log('Share was successful.')
+                    }).catch((error) => {
+                        console.log('Sharing failed', error)
+                    });
                 } else {
-                    console.log(`Your system doesn't support sharing files.`);
+                    console.log('Your system doesn\'t support sharing files.');
                 }
+
             }
 
         }
