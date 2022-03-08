@@ -1000,6 +1000,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (min-width: 768px) {
+  .md\:w-auto {
+    width: auto;
+  }
+
   .md\:min-w-\[500px\] {
     min-width: 500px;
   }
