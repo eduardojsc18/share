@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#111827">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111827">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f4f6">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#f3f4f6">
 
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
     <title>Share - System to share images using Web Share API</title>
 
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen gap-y-10">
+<body class="bg-gray-100 flex flex-col min-h-screen gap-y-5 relative">
 
-    <header class="px-5 pt-10">
-        <h1 class="font-bold text-center tracking-wider text-2xl">Sistema de Compartilhamento</h1>
+    <header class="absolute top-0 z-50 w-full grid place-items-center">
+        <h1 class="font-bold text-center tracking-wider text-sm bg-white rounded-b-xl inline-block py-1 px-5 shadow-xl">Sistema de Compartilhamento</h1>
     </header>
 
-    <main class="flex-1 flex flex-col h-full px-5">
+    <main class="flex-1 flex flex-col max-w-[500px] h-full px-5 pt-16 ">
 
         <div class="flex-1 flex flex-col h-full" id="banner">
 
@@ -27,7 +27,7 @@
                 <img src="https://picsum.photos/1080/1920?2" class="object-cover object-center w-full h-full" alt="">
             </div>
 
-            <div class="z-0 flex-1 flex flex-col justify-center gap-3 px-5 bg-white mr-5 rounded-br-3xl shadow-md">
+            <div class="z-0 flex-1 flex flex-col justify-center gap-3 px-5 py-3 mr-4 bg-white rounded-b-3xl shadow-md">
 
                 <div class="text-2xl text-gray-700">
                     <label for="name" class="sr-only"></label>
@@ -36,8 +36,8 @@
 
                 <div class="flex gap-3 text-sm w-full">
                     <div class="w-full">
-                        <label for="tel" class="sr-only"></label>
-                        <input id="tel" type="tel" class="w-full p-1 text-center bg-transparent" value="(11) 95472-3067" placeholder="Seu telefone">
+                        <label for="phone" class="sr-only"></label>
+                        <input id="phone" type="tel" class="w-full p-1 text-center bg-transparent" value="(11) 95472-3067" placeholder="Seu telefone">
                     </div>
 
                     <div class="w-full">
@@ -46,16 +46,17 @@
                     </div>
                 </div>
 
-
             </div>
 
         </div>
 
     </main>
 
-    <nav class="p-5 bg-white rounded-t-[2.5rem] grid grid-cols-2 gap-5 shadow-[0_20px_25px_5px_rgb(0_0_0_/_0.1),0_8px_10px_6px_rgb(0_0_0_/_0.1)] font-bold text-gray-600">
+    <nav class="max-w-[600px] m-5 p-5 bg-white rounded-[2.5rem] grid grid-cols-2 gap-5 shadow-2xl font-bold text-gray-600">
 
-        <div class="cursor-pointer flex items-center justify-center gap-3 bg-green-50 hover:bg-green-100 rounded-3xl py-5 text-green-500 active:bg-green-900 active:text-green-50 transition-all">
+        <div class="cursor-pointer flex items-center justify-center gap-3 bg-green-50 hover:bg-green-100 rounded-3xl py-5 text-green-500 active:bg-green-900 active:text-green-50 transition-all"
+             onclick="downloadImage()"
+            >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
@@ -73,17 +74,33 @@
 
     </nav>
 
-    <script src="assets/js/dom-to-image-more/src/dom-to-image-more.js" ></script>
+    <script src="assets/js/dom-to-image-more/src/dom-to-image-more.js"></script>
 
     <script>
 
-        async function shareImage() {
+        // function downloadImage() {
+        //
+        //     const banner = document.getElementById('banner')
+        //     const name = document.getElementById('name').value
+        //     const phone = document.getElementById('phone').value
+        //     const email = document.getElementById('email').value
+        //
+        //     saveAsJpeg(banner,
+        //         { filename: `Share - 👽 ${name} - 📞 ${phone} - ✉️ ${email}`, printDate: true },
+        //     )
+        //
+        // }
 
-            await domtoimage
-                .toJpeg(document.getElementById('banner'))
-                .then(function (dataUrl) {
-                    share(dataUrl)
-                })
+        function shareImage() {
+
+            const banner = document.getElementById('banner')
+            const name = document.getElementById('name').value
+            const phone = document.getElementById('phone').value
+            const email = document.getElementById('email').value
+
+            domtoimage.toJpeg(banner).then(function (dataUrl){
+                share(dataUrl)
+            })
 
             async function share(image) {
 
@@ -91,8 +108,8 @@
                 const file = new File([blob], 'NomeDoArquivo.jpeg', {type: blob.type});
 
                 await navigator.share({
-                    title: 'Hello',
-                    text: 'Check out this image!',
+                    title: `Share - 👽 ${name}`,
+                    text: `Share - 👽 ${name} - 📞 ${phone} - ✉️ ${email}`,
                     files: [file],
                 })
 
