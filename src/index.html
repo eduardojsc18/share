@@ -56,7 +56,7 @@
         </div>
     </main>
 
-    <nav class="absolute bottom-0 w-full">
+    <nav class="fixed bottom-0 w-full z-[999]">
         <div class="mx-3 mb-5 px-4 py-3 bg-white rounded-[2.5rem] flex items-center justify-center gap-3 shadow-2xl font-bold text-gray-600 relative md:w-[550px] md:mx-auto">
 
             <div class="cursor-pointer w-full flex items-center  justify-center gap-3 bg-green-50 hover:bg-green-100 rounded-3xl py-3 text-green-500 active:bg-green-900 active:text-green-50 transition-all"
@@ -89,22 +89,31 @@
         </div>
     </nav>
 
-    <script src="assets/js/dom-to-image-more/src/dom-to-image-more.js"></script>
+    <script src="assets/js/dom-to-image-more/src/dom-to-image-more.js" defer></script>
 
     <script>
 
-        // function downloadImage() {
-        //
-        //     const banner = document.getElementById('banner')
-        //     const name = document.getElementById('name').value
-        //     const phone = document.getElementById('phone').value
-        //     const email = document.getElementById('email').value
-        //
-        //     saveAsJpeg(banner,
-        //         { filename: `Share - 👽 ${name} - 📞 ${phone} - ✉️ ${email}`, printDate: true },
-        //     )
-        //
-        // }
+        function downloadImage() {
+
+            const banner = document.getElementById('banner')
+            const name = document.getElementById('name').value
+            const phone = document.getElementById('phone').value
+            const email = document.getElementById('email').value
+
+            domtoimage
+                .toPng(banner, { quality: 1 })
+                .then(function (dataUrl) {
+                    const link = document.createElement("a");
+                    link.download = name;
+                    link.href = dataUrl;
+                    link.click();
+                });
+
+            // saveAsJpeg(banner,
+            //     { filename: `Share - 👽 ${name} - 📞 ${phone} - ✉️ ${email}`, printDate: true },
+            // )
+
+        }
 
         function shareImage() {
 
