@@ -130,11 +130,7 @@
 
                 await navigator.share({
                     title: `Share - ${ name ? name : 'Meu Compartilhamento'}`,
-                    text: `Share -
-                        ${ name ? name : 'Meu Compartilhamento'} -
-                        ${ phone ? phone : ''} -
-                        ${ email ? email : ''}
-                        `,
+                    text: `Share - ${ name ? name : 'Meu Compartilhamento'} - ${ phone ? phone : ''} - ${ email ? email : ''} `,
                     files: [file],
                 })
 
