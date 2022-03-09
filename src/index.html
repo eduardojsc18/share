@@ -13,7 +13,6 @@
 
     <link rel="stylesheet" href="assets/style.css">
 
-
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen gap-y-10 pb-40 relative" x-data="imageViewer()">
 
@@ -27,7 +26,7 @@
             <div class="flex-1 flex flex-col h-full" id="banner">
 
                 <div class="z-20 bg-gray-400 shadow-inner overflow-hidden rounded-t-3xl rounded-br-3xl w-full h-[600px] drop-shadow-md">
-                    <img src="https://picsum.photos/1080/1920?2" class="object-cover object-center w-full h-full" alt="">
+                    <img src="https://picsum.photos/seed/dog/1080/1920?grayscale&blur" class="object-cover object-center w-full h-full" alt="" id="image">
                 </div>
 
                 <div class="z-0 flex-1 flex flex-col justify-center gap-3 px-5 pt-10 pb-5 -mt-5 bg-white rounded-b-3xl shadow-md">
@@ -74,7 +73,7 @@
                 </svg>
             </label>
             <input type="file" name="uploadImage" id="uploadImage" accept="image/png, image/gif, image/jpeg" hidden
-                   onchange="imageViewer()"
+                   onchange="document.getElementById('image').src = window.URL.createObjectURL(this.files[0])">
             >
 
             <div class="cursor-pointer w-full flex items-center justify-center gap-3 bg-blue-50 hover:bg-blue-100 rounded-3xl py-3 text-blue-500 active:bg-blue-900 active:text-blue-50 transition-all"
@@ -97,14 +96,12 @@
 
             const banner = document.getElementById('banner')
             const name = document.getElementById('name').value
-            const phone = document.getElementById('phone').value
-            const email = document.getElementById('email').value
 
             domtoimage
                 .toPng(banner, { quality: 1 })
                 .then(function (dataUrl) {
                     const link = document.createElement("a");
-                    link.download = name;
+                    link.download = `${ name ? name : 'Meu Compartilhamento'}`;
                     link.href = dataUrl;
                     link.click();
                 });
@@ -132,8 +129,12 @@
                 const file = new File([blob], `${name}.jpeg`, {type: blob.type});
 
                 await navigator.share({
-                    title: `Share - 👽 ${name}`,
-                    text: `Share - 👽 ${name} - 📞 ${phone} - ✉️ ${email}`,
+                    title: `Share - ${ name ? name : 'Meu Compartilhamento'}`,
+                    text: `Share -
+                        ${ name ? name : 'Meu Compartilhamento'} -
+                        ${ phone ? phone : ''} -
+                        ${ email ? email : ''}
+                        `,
                     files: [file],
                 })
 
