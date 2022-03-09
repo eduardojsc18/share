@@ -126,7 +126,7 @@
             async function share(image) {
 
                 const blob = await (await fetch(image)).blob();
-                const file = new File([blob], `${name}.jpeg`, {type: blob.type});
+                const file = new File([blob], `${name ? name : 'MeuCompartilhamento'}.jpeg`, {type: blob.type});
 
                 await navigator.share({
                     title: `Share - ${ name ? name : 'Meu Compartilhamento'}`,
