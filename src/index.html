@@ -26,7 +26,7 @@
             <div class="flex-1 flex flex-col h-full" id="banner">
 
                 <div class="z-20 bg-gray-400 shadow-inner overflow-hidden rounded-t-3xl rounded-br-3xl w-full h-[600px] drop-shadow-md">
-                    <img src="https://picsum.photos/seed/dog/1080/1920?grayscale&blur" class="object-cover object-center w-full h-full" alt="" id="image">
+                    <img src="https://corretoresdeplanosdesaude.s3.sa-east-1.amazonaws.com/banners/60de194549e4f.jpg" class="object-cover object-center w-full h-full" alt="" id="image">
                 </div>
 
                 <div class="z-0 flex-1 flex flex-col justify-center gap-3 px-5 pt-10 pb-5 -mt-5 bg-white rounded-b-3xl shadow-md">
@@ -126,7 +126,11 @@
             async function share(image) {
 
                 const blob = await (await fetch(image)).blob();
-                const file = new File([blob], `${name ? name : 'MeuCompartilhamento'}.jpeg`, {type: blob.type});
+                const file = new File(
+                    [blob],
+                    `${name ? name : 'MeuCompartilhamento'}.jpeg`,
+                    {type: blob.type}
+                );
 
                 await navigator.share({
                     title: `Share - ${ name ? name : 'Meu Compartilhamento'}`,
